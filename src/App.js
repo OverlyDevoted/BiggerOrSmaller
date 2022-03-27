@@ -47,6 +47,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMovies, setLoadedMovies] = useState([]);
   useEffect(() => {
+    //when a backend gets implemented get getters for api keys or smth cuz lmao
     fetch("https://imdb-api.com/en/API/MostPopularMovies/k_osvbh65y", {
       method: "GET",
     })
