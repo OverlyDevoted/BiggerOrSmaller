@@ -12,3 +12,10 @@ From a list of categories select one and start guessing which of the category it
 ### Current categories
 
 * IMDB Top 250 movies
+
+### To do
+
+* User login
+* Global leaderboards
+* User created categories
+* More premade categories
