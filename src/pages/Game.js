@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import MovieList from "../components/movies/MovieList";
+import MovieList from "../components/game/MovieList";
 
-function Game(props) {
+function GamePage(props) {
   const [gameName, setGameName] = useState("imdbTop250");
   useEffect(() => {
     setGameName(props.gameName);
@@ -12,4 +12,4 @@ function Game(props) {
     </div>
   );
 }
-export default Game;
+export default GamePage;

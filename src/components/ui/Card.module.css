@@ -1,0 +1,11 @@
+
+.ul {
+    list-style-type: none;
+    background-color: rgb(18, 2, 34);
+    margin: 10px;
+    padding: 10px;
+    flex:1;
+    text-align: center;
+    
+    color: white;
+}

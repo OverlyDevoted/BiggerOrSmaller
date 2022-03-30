@@ -1,0 +1,10 @@
+
+.li {
+    margin: 30px;
+}
+.div{
+    width: 400px;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+}

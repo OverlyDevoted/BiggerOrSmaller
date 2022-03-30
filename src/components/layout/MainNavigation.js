@@ -1,20 +1,37 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 
 function MainNavigation() {
   return (
-    <nav>
-      <header>
-        <div>Bigger or Smaller</div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">All games</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+    <nav className={classes.nav}>
+      <header style={{fontFamily:"sans-serif"}}>Bigger or Smaller</header>
+      <nav>
+        <ul>
+          <li>
+            <Link className={classes.link} to="/">
+              <button>All games</button>
+            </Link>
+          </li>
+          <li>
+            <Link className={classes.link} to="/leaderboard">
+              <button>Leaderboards</button>
+            </Link>
+          </li>
+          
+          <li>
+            <Link className={classes.link} to="/create-game">
+              <button>Create Game</button>
+            </Link>
+          </li>
+          <li>
+            <Link className={classes.link} to="/account">
+              <button>Account</button>
+            </Link>
+          </li>
+          
+        </ul>
+      </nav>
     </nav>
   );
 }

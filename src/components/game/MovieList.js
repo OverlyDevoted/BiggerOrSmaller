@@ -1,5 +1,5 @@
 import classes from "./MovieList.module.css";
-import MovieItem from "./MovieItem.js";
+import GameItem from "./GameItem.js";
 import { useState, useEffect } from "react";
 function MovieList(props) {
   //console.log(props.movies);
@@ -10,31 +10,23 @@ function MovieList(props) {
   const length = props.movies.length;
 
   function setNew(id) {
-    if (firstIndex >= length - 3 || secondIndex >= length - 3)
-    {
+    if (firstIndex >= length - 3 || secondIndex >= length - 3) {
       console.log("end game");
       return;
     }
-    if (id === 0) {
-      if (firstIndex < secondIndex) {
-        setFirstIndex(secondIndex + 1);
-        return;
-      }
-      setFirstIndex(firstIndex + 1);
-      return;
-    }
-    if (secondIndex < firstIndex) {
-      setSecondIndex(firstIndex + 1);
-      return;
-    }
-    setSecondIndex(secondIndex + 1);
+    setTimeout(() => {
+      setFirstIndex(firstIndex + 2);
+      setSecondIndex(secondIndex + 2);
+    }, 2000);
   }
 
   function checkBigger(id) {
-    
     let result;
 
-    if (props.movies[firstIndex].imDbRating >= props.movies[secondIndex].imDbRating)
+    if (
+      props.movies[firstIndex].imDbRating >=
+      props.movies[secondIndex].imDbRating
+    )
       result = 0;
     else result = 1;
 
@@ -48,10 +40,10 @@ function MovieList(props) {
   //console.log(movies);
   //iskelus buttonus kaip passable jsx maziau kartotino kodo
   return (
-    <div>
+    <div className={classes.div}>
       {score}
-      <ul>
-        <MovieItem
+      <ul style={{padding:"0px"}}>
+        <GameItem
           key={0}
           id={props.movies[firstIndex].id}
           title={props.movies[firstIndex].title}
@@ -62,7 +54,7 @@ function MovieList(props) {
           }}
           checkBigger={() => checkBigger(0)}
         />
-        <MovieItem
+        <GameItem
           key={1}
           id={props.movies[secondIndex].id}
           title={props.movies[secondIndex].title}

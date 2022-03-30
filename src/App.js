@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import AllMeetupsPage from "./pages/AllMeetups";
-import FavoritesPage from "./pages/Favorites";
-import NewMeetupPage from "./pages/NewMeetup";
 import { useState, useEffect } from "react";
-import MainNavigation from "./components/layout/MainNavigation";
 import Layout from "./components/layout/Layout";
 import AllGamesPage from "./pages/AllGames";
-import Game from "./pages/GamePage";
+import GamePage from "./pages/Game";
+import classes from "./App.module.css";
+import LeaderboardPage from "./pages/Leaderboard";
+import CreateGamePage from "./pages/CreateGame";
+import AccountPage from "./pages/Account";
 let DUMMY_DATA = [
   {
     id: 1,
@@ -41,6 +41,7 @@ function Randomize(array) {
   }
   return temp;
 }
+
 //https://imdb-api.com/en/API/MostPopularMovies/k_osvbh65y
 //https://imdb-api.com/en/API/Top250Movies/k_osvbh65y
 function App() {
@@ -48,7 +49,7 @@ function App() {
   const [loadedMovies, setLoadedMovies] = useState([]);
   useEffect(() => {
     //when a backend gets implemented get getters for api keys or smth cuz lmao
-    fetch("https://imdb-api.com/en/API/MostPopularMovies/k_osvbh65y", {
+    fetch("https://imdb-api.com/en/API/Top250Movies/k_osvbh65y", {
       method: "GET",
     })
       .then((response) => response.json())
@@ -68,22 +69,21 @@ function App() {
       .then((data) => console.log(data));
   }*/
   //console.log(loadedMovies);
-  let temp_arr = loadedMovies;
+  let temp_arr;
+  if (!loadedMovies) temp_arr = DUMMY_DATA;
+  else temp_arr = loadedMovies;
   temp_arr = Randomize(temp_arr);
   return (
-    <div>
+    <div className={classes.div}>
       <Layout>
         <Routes>
           <Route path="/" element={<AllGamesPage />} />
-          <Route path="new-meetup" element={<NewMeetupPage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route
-            path="all-meetups"
-            element={<AllMeetupsPage movies={temp_arr} />}
-          />
+          <Route path="leaderboard" element={<LeaderboardPage />} />
+          <Route path="create-game" element={<CreateGamePage />} />          
+          <Route path="account" element={<AccountPage />} />
           <Route
             path="game"
-            element={<Game gameName="imdbTop250" movies={temp_arr} />}
+            element={<GamePage gameName="imdbTop250" movies={temp_arr} />}
           />
         </Routes>
       </Layout>
