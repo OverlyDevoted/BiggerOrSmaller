@@ -29,7 +29,11 @@ function MainNavigation() {
               <button>Account</button>
             </Link>
           </li>
-          
+          <li>
+            <Link className={classes.link} to="/account">
+              <button>User Created Games</button>
+            </Link>
+          </li>
         </ul>
       </nav>
     </nav>

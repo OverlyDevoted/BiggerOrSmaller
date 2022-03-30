@@ -41,31 +41,37 @@ function MovieList(props) {
   //iskelus buttonus kaip passable jsx maziau kartotino kodo
   return (
     <div className={classes.div}>
-      {score}
-      <ul style={{padding:"0px"}}>
-        <GameItem
-          key={0}
-          id={props.movies[firstIndex].id}
-          title={props.movies[firstIndex].title}
-          image={props.movies[firstIndex].image}
-          score={props.movies[firstIndex].imDbRating}
-          onClick={() => {
-            setNew(1);
-          }}
-          checkBigger={() => checkBigger(0)}
-        />
-        <GameItem
-          key={1}
-          id={props.movies[secondIndex].id}
-          title={props.movies[secondIndex].title}
-          image={props.movies[secondIndex].image}
-          score={props.movies[secondIndex].imDbRating}
-          onClick={() => {
-            setNew(0);
-          }}
-          checkBigger={() => checkBigger(1)}
-        />
+      <GameItem
+        key={0}
+        id={props.movies[firstIndex].id}
+        title={props.movies[firstIndex].title}
+        image={props.movies[firstIndex].image}
+        score={props.movies[firstIndex].rank}
+        onClick={() => {
+          setNew(1);
+        }}
+        checkBigger={() => checkBigger(0)}
+      />
+      <ul className={classes.ul}>
+        <li>
+          <div >Score</div>
+          <div className={classes.score}>{score}</div>
+        </li>
+        <li>
+          <div className={classes.box}></div>
+        </li>
       </ul>
+      <GameItem
+        key={1}
+        id={props.movies[secondIndex].id}
+        title={props.movies[secondIndex].title}
+        image={props.movies[secondIndex].image}
+        score={props.movies[secondIndex].rank}
+        onClick={() => {
+          setNew(0);
+        }}
+        checkBigger={() => checkBigger(1)}
+      />
     </div>
   );
 }

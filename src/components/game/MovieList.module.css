@@ -1,4 +1,32 @@
+@keyframes scoreTick {
+    from{font-size: 1cm;}
+    to{font-size:2cm;}
+}
 .div{
     display: flex;
     flex-wrap: wrap;
+    color: white;
+    justify-content: center;
+    text-align: center;
+}
+.div li{
+    list-style: none;
+    justify-content: center;
+    padding: 0px;
+}
+
+.ul{
+    list-style: none;
+    padding-left: 0px;
+    margin: 0px;
+    overflow: hidden;
+    padding-top: 25%;
+    font-family: sans-serif;
+    font-size: 1cm;
+}
+
+.box{
+    
+    height: 50px;
+    background-color: rgba(0,0,0,0);
 }

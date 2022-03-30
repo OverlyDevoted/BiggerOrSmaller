@@ -1,12 +1,17 @@
 .nav {
-  background-color: #0D0D0D;
+  background-color: #161616;
+
   text-align: center;
   color: #F2F2F2;
+  position:fixed;
+  width: 100%;
+  white-space: nowrap;
+  top: 0;
 }
 .nav header {
-  padding: 20px;
+  padding: 1.5%;
   font-family: sans-serif;
-  font-size: 50px;
+  font-size: 300% ;
 }
 /* Color Theme Swatches in Hex 
 .◾️Grids-1-hex { color: #F2F2F2; }
@@ -38,22 +43,20 @@ Color Theme Swatches in HSLA
   list-style: none;
   padding-left: 0px;
   margin: 0px;
-  border: 2px solid rgb(255, 255, 255);
   overflow: hidden;
-
 }
 .nav li{
+  
   display: inline;
   width: 100%;
 }
 .nav ul button {
-  width: 25%;
-  border: rgb(255, 255, 255);
+  width: 20%;
+  border: 2% solid rgb(255, 255, 255);
   color: white;
-  box-shadow: 0px 0px 2px rgb(255, 255, 255);
-  padding: 20px;
-  background-color: #0D0D0D;
-  font-size: 20px;
+  padding: 1.5%;
+  background-color: #161616;
+  font-size: 150%;
 }
 .nav ul button:hover {
   background-color: #404040;

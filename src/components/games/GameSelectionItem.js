@@ -13,12 +13,7 @@ function GameSelectionItem(props) {
     <Card className={classes.li}>
       <li className={classes.li}>{props.gameName}</li>
       <li>
-        <div style={{backgroundImage:"url("+props.src+")"}} className={classes.div}/>
-      </li>
-      <li>
-        <button className="btn btn--alt" onClick={StartGame}>
-          Play
-        </button>
+        <div onClick={StartGame} style={{backgroundImage:"url("+props.src+")"}} className={classes.div}/>
       </li>
     </Card>
   );

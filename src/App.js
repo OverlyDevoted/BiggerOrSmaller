@@ -75,7 +75,7 @@ function App() {
   temp_arr = Randomize(temp_arr);
   return (
     <div className={classes.div}>
-      <Layout>
+      <Layout creatorText="Website created by Robert Dulko">
         <Routes>
           <Route path="/" element={<AllGamesPage />} />
           <Route path="leaderboard" element={<LeaderboardPage />} />
