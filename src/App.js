@@ -7,6 +7,7 @@ import classes from "./App.module.css";
 import LeaderboardPage from "./pages/Leaderboard";
 import CreateGamePage from "./pages/CreateGame";
 import AccountPage from "./pages/Account";
+import axios from "axios";
 let DUMMY_DATA = [
   {
     id: 1,
@@ -47,28 +48,25 @@ function Randomize(array) {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMovies, setLoadedMovies] = useState([]);
+  const [loadedGames, setLoadedGames] = useState([]);
   useEffect(() => {
     //when a backend gets implemented get getters for api keys or smth cuz lmao
-    fetch("https://imdb-api.com/en/API/Top250Movies/k_osvbh65y", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    //no, make it so that the back end sends the requeest and front end makes request to back
+    //to get the answer, it's safer that way?? cuz the user could just click the f12 to see all the request and ur api keys
+    axios
+      .get("https://imdb-api.com/en/API/Top250Movies/k_osvbh65y")
+      .then((res) => {
         setIsLoading(false);
-        setLoadedMovies(data.items);
+        setLoadedMovies(res.data.items);
       });
+    axios.get("https://localhost:7147/api/User").then((res) => {
+      setLoadedGames(res.data);
+    });
   }, []);
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  /*function getMovies() {
-    const answer = fetch("https://api.github.com/users/OverlyDevoted", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  }*/
-  //console.log(loadedMovies);
+
   let temp_arr;
   if (!loadedMovies) temp_arr = DUMMY_DATA;
   else temp_arr = loadedMovies;
@@ -79,7 +77,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AllGamesPage />} />
           <Route path="leaderboard" element={<LeaderboardPage />} />
-          <Route path="create-game" element={<CreateGamePage />} />          
+          <Route path="create-game" element={<CreateGamePage />} />
           <Route path="account" element={<AccountPage />} />
           <Route
             path="game"

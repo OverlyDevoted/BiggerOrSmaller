@@ -7,8 +7,13 @@ function MovieList(props) {
   const [firstIndex, setFirstIndex] = useState(0);
   const [secondIndex, setSecondIndex] = useState(1);
   const [score, setScore] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
   const length = props.movies.length;
-
+  useEffect(() => {
+    console.log(props.movies.length);
+    if (props.movies.length > 0) 
+      setIsLoaded(true);
+  }, [props]);
   function setNew(id) {
     if (firstIndex >= length - 3 || secondIndex >= length - 3) {
       console.log("end game");
@@ -40,38 +45,42 @@ function MovieList(props) {
   //console.log(movies);
   //iskelus buttonus kaip passable jsx maziau kartotino kodo
   return (
-    <div className={classes.div}>
-      <GameItem
-        key={0}
-        id={props.movies[firstIndex].id}
-        title={props.movies[firstIndex].title}
-        image={props.movies[firstIndex].image}
-        score={props.movies[firstIndex].rank}
-        onClick={() => {
-          setNew(1);
-        }}
-        checkBigger={() => checkBigger(0)}
-      />
-      <ul className={classes.ul}>
-        <li>
-          <div >Score</div>
-          <div className={classes.score}>{score}</div>
-        </li>
-        <li>
-          <div className={classes.box}></div>
-        </li>
-      </ul>
-      <GameItem
-        key={1}
-        id={props.movies[secondIndex].id}
-        title={props.movies[secondIndex].title}
-        image={props.movies[secondIndex].image}
-        score={props.movies[secondIndex].rank}
-        onClick={() => {
-          setNew(0);
-        }}
-        checkBigger={() => checkBigger(1)}
-      />
+    <div>
+      {isLoaded && (
+        <div className={classes.div}>
+          <GameItem
+            key={0}
+            id={props.movies[firstIndex].id}
+            title={props.movies[firstIndex].title}
+            image={props.movies[firstIndex].image}
+            score={props.movies[firstIndex].rank}
+            onClick={() => {
+              setNew(1);
+            }}
+            checkBigger={() => checkBigger(0)}
+          />
+          <ul className={classes.ul}>
+            <li>
+              <div>Score</div>
+              <div className={classes.score}>{score}</div>
+            </li>
+            <li>
+              <div className={classes.box}></div>
+            </li>
+          </ul>
+          <GameItem
+            key={1}
+            id={props.movies[secondIndex].id}
+            title={props.movies[secondIndex].title}
+            image={props.movies[secondIndex].image}
+            score={props.movies[secondIndex].rank}
+            onClick={() => {
+              setNew(0);
+            }}
+            checkBigger={() => checkBigger(1)}
+          />
+        </div>
+      )}
     </div>
   );
 }
