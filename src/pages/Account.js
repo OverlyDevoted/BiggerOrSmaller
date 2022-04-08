@@ -1,10 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Form from "../components/ui/Form";
+import { useState, useEffect, useContext, createContext } from "react";
+import Form from  "../components/ui/Form";
+import { UserContext } from "../App";
+import Profile from "../components/profile/Profile";
+
 function AccountPage() {
-  const [isLogged, setIsLogged] = useState(false);
+  const user = useContext(UserContext);
+  if(user.name.length===0)
   return <div>
-    {!isLogged && <Form/>}
+    <Form/>
+  </div>
+
+  return <div>
+    <Profile/>
   </div>;
 }
 export default AccountPage;

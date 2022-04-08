@@ -18,7 +18,11 @@ function MainNavigation() {
               <button>Leaderboards</button>
             </Link>
           </li>
-          
+          <li>
+            <Link className={classes.link} to="/user-created-games">
+              <button>User Created Games</button>
+            </Link>
+          </li>
           <li>
             <Link className={classes.link} to="/create-game">
               <button>Create Game</button>
@@ -27,11 +31,6 @@ function MainNavigation() {
           <li>
             <Link className={classes.link} to="/account">
               <button>Account</button>
-            </Link>
-          </li>
-          <li>
-            <Link className={classes.link} to="/account">
-              <button>User Created Games</button>
             </Link>
           </li>
         </ul>

@@ -15,6 +15,9 @@ function GameSelectionItem(props) {
       <li>
         <div onClick={StartGame} style={{backgroundImage:"url("+props.src+")"}} className={classes.div}/>
       </li>
+      <li>
+        {props.children}
+      </li>
     </Card>
   );
 }
