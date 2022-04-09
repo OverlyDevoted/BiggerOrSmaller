@@ -9,6 +9,7 @@ import CreateGamePage from "./pages/CreateGame";
 import AccountPage from "./pages/Account";
 import UserCreatedGamesPage from "./pages/UserCreatedGames";
 import axios from "axios";
+import EditGamePage from "./pages/EditGame";
 
 export const UserContext = createContext(null);
 
@@ -70,6 +71,7 @@ function App() {
             <Route path="leaderboard" element={<LeaderboardPage />} />
             <Route path="create-game" element={<CreateGamePage />} />
             <Route path="account" element={<AccountPage />} />
+            <Route path="edit-game" element={<EditGamePage />} />
             <Route path="user-created-games" element={<UserCreatedGamesPage/>}/>
             <Route
               path="game"

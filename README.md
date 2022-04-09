@@ -21,8 +21,9 @@ From a list of games select one and start guessing which of the game item has a 
 - [ ] With user deletion don't delete his games 
 - [ ] Global leaderboards
 - [x] User created games
-- [ ] Ability to modify/delete games
-- [ ] Ability to add game cards to games
+- [x] Ability to modify/delete games *
+- [ ] Ability to add game cards to games *
 - [ ] More premade games
 - [ ] Ability to browse user created games
 - [ ] Ability to add games to your library
+- [ ] When reloading the page keep the user logged

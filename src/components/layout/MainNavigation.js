@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 
-function MainNavigation() {
+function MainNavigation(props) {
   return (
-    <nav className={classes.nav}>
+    <nav style={props.style} className={classes.nav}>
       <header style={{fontFamily:"sans-serif"}}>Bigger or Smaller</header>
       <nav>
         <ul>

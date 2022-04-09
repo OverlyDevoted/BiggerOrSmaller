@@ -21,7 +21,11 @@ function CreateGamePage() {
     return <div>Loading...</div>;
   }
   const handleClick = async () => {
-    if (name.length < 4) return "The has to be at least 5 characters";
+    if (name.length < 4) 
+    {
+      console.log("The has to be at least 5 characters");
+      return;
+    }
     axios
       .post("https://localhost:7147/api/Game", {
         name: name,
@@ -31,14 +35,15 @@ function CreateGamePage() {
       .then(function (response) {
         console.log("game added");
         user.games.push(response.data);
-        navigate('/user-created-games')
+        navigate("/user-created-games");
       })
       .catch(function (exception) {
         console.log(exception);
       });
   };
+
   return (
-    <div>
+    <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
       <Card>
         <li>
           <form>

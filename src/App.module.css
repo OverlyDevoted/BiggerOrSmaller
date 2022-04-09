@@ -1,5 +1,5 @@
 .div{
     background-color: #0D0D0D;
     height: 100%;
-    padding-top: 200px;
+    min-height: 100vh;
 }

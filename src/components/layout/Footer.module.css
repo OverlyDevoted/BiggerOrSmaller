@@ -3,5 +3,9 @@
     text-align: center;
     color: white;
     padding: 0.5cm;
+    font-size: 0.5cm;
     font-family: sans-serif;
+    bottom: 0px;
+    position: fixed;
+    width: 100%;
 }
