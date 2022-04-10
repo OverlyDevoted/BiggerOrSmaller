@@ -74,9 +74,10 @@ function CreateGamePage() {
               <br />
             </label>
           </form>
-          <button
+          <button id="submitButton"
             onClick={() => {
               handleClick();
+              document.getElementById("submitButton").onclick=null;
             }}
           >
             Submit

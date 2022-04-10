@@ -37,7 +37,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [id, setId] = useState(null);
   const [games, setGames] = useState([]);
-
+  const [gameItems, setGameItems] = useState([]);
   useEffect(() => {
     //when a backend gets implemented get getters for api keys or smth cuz lmao
     //no, make it so that the back end sends the requeest and front end makes request to back
@@ -47,6 +47,7 @@ function App() {
       .then((res) => {
         setIsLoading(false);
         setLoadedMovies(res.data.items);
+        console.log(res);
       });
     
     axios.get("https://localhost:7147/api/User").then((res) => {
@@ -65,7 +66,7 @@ function App() {
   return (
     <div className={classes.div}>
       <Layout creatorText="Website created by Robert Dulko">
-        <UserContext.Provider value={{name, password, id, games, setName, setPassword, setId, setGames}}>
+        <UserContext.Provider value={{name, password, id, games, gameItems, setName, setPassword, setId, setGames, setGameItems}}>
           <Routes>
             <Route path="/" element={<AllGamesPage />} />
             <Route path="leaderboard" element={<LeaderboardPage />} />

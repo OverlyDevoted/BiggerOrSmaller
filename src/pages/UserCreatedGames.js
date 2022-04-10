@@ -11,19 +11,20 @@ function UserCreatedGamesPage() {
 
   const [conBox, setConBox] = useState(false);
   const [toDelete, setToDelete] = useState(null);
-  async function updateGames(userId)
-  {
+  async function updateGames(userId) {
     await axios
-    .get("https://localhost:7147/api/Game/" + userId)
-    .then(function (response) {
-      user.setGames(response.data);
-    })
-    .catch(function (exception) {
-      console.log(exception);
-      user.setGames([]);
-    });
+      .get("https://localhost:7147/api/Game/" + userId)
+      .then(function (response) {
+        user.setGames(response.data);
+      })
+      .catch(function (exception) {
+        console.log(exception);
+        user.setGames([]);
+      });
   }
   useEffect(() => {
+    
+    console.log("update");
     if (user.name.length < 1) {
       navigate("/account");
       return <div>Loading...</div>;
@@ -33,17 +34,16 @@ function UserCreatedGamesPage() {
       return <div>Loading...</div>;
     }
     updateGames(user.id);
-  }, [user.games]);
+  }, []);
 
   const handleDelete = async (gameId, userId) => {
     await axios.delete("https://localhost:7147/api/Game/" + gameId);
 
     updateGames(userId);
   };
-  function handleEdit(game)
-  {
+  function handleEdit(game) {
     console.log(game);
-    navigate("/edit-game", {state: game});
+    navigate("/edit-game", { state: game });
   }
   return (
     <div className={classes.div}>
@@ -55,7 +55,13 @@ function UserCreatedGamesPage() {
             src={games.cover_url}
             url="account"
           >
-            <button onClick={() => {handleEdit(games)}}>Edit</button>
+            <button
+              onClick={() => {
+                handleEdit(games);
+              }}
+            >
+              Edit
+            </button>
             <button
               onClick={() => {
                 setConBox(true);

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function GameSelectionItem(props) {
   const navigate = useNavigate();
   function StartGame() {
+    if(props.url)
     navigate("/"+props.url);
   }
   return (
