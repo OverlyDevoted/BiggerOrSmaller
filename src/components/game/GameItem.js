@@ -12,7 +12,7 @@ function GameItem(props) {
       <li
         className={classes.li}
         onClick={() => {
-          if (props.display) {
+          if (!props.display) {
             props.checkBigger();
             props.onClick();
             setIsRevealed(true);

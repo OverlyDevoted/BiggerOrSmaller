@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useNavigate, useLocation, useResolvedPath } from "react-router-dom";
+import { useContext, useState, useEffect, useRef } from "react";
 import { UserContext } from "../App";
 import Card from "../components/ui/Card";
 import GameSelectionItem from "../components/games/GameSelectionItem";
@@ -28,6 +28,8 @@ function EditGamePage() {
   const [gameItemURL, setGameItemUrl] = useState("");
   const [score, setGameScore] = useState("");
 
+  const gameEdit = useRef([]);
+
   useEffect(() => {
     setName(location.state.name);
     setUrl(location.state.cover_url);
@@ -45,16 +47,18 @@ function EditGamePage() {
         console.log(error);
       });
   }
-  async function handleUpdate(id, name, score, url) {
+  async function handleUpdateItem(id, name, score, url) {
     const payload = { name: name, score: score, cover_Url: url };
     await axios
-      .put("https://localhost:7147/api/GameItem/" + id.payload)
+      .put("https://localhost:7147/api/GameItem/" + id, payload)
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+      
+    getGameItems(location.state.id);
   }
 
   async function handleRemove(id) {
@@ -106,13 +110,13 @@ function EditGamePage() {
       });
     getGameItems(location.state.id);
   }
-  
+  console.log("Rerender");
   return (
     <div style={divStyle}>
-      <Card noOutline={true}>
+      <Card border={"0"}>
         <h1 className={classes.header}>Edit Game</h1>
         <div style={divStyle}>
-          <Card noOutline={true}>
+          <Card border={"0"}>
             <li>
               <form>
                 <label>
@@ -155,10 +159,10 @@ function EditGamePage() {
         </div>
       </Card>
 
-      <Card noOutline={true}>
+      <Card border={"0"}>
         <h1 className={classes.header}>Add Game Items</h1>
         <div style={divStyle}>
-          <Card noOutline={true}>
+          <Card border={"0"}>
             <li>
               <form>
                 <label>
@@ -220,26 +224,52 @@ function EditGamePage() {
           />
         </div>
       </Card>
-      <Card noOutline={true}>
+      <Card border={"0"}>
         <h1 className={classes.header}>Manage Game Items</h1>
         <div style={divStyle}>
           {user.gameItems.map((gameItem) => {
             return (
-              <GameItemEdit
-                key={gameItem.id}
-                title={gameItem.name}
-                image={gameItem.cover_Url}
-                score={gameItem.score}
-                reveal={true}
-                onClick={() => {
-                  handleRemove(gameItem.id);
-                }}
-              />
+              <div ref={el => gameEdit.current[gameItem.id] = el} key={gameItem.id} id={gameItem.id}>
+                <GameItemEdit
+                  title={gameItem.name}
+                  image={gameItem.cover_Url}
+                  score={gameItem.score}
+                  reveal={true}
+                  onClick={() => {
+                    handleRemove(gameItem.id);
+                  }}
+                />
+              </div>
             );
           })}
         </div>
         <li>
-          <button>Save changes</button>
+          <button
+            onClick={() => {
+              gameEdit.current.forEach(el=>{
+                let gameItem = user.gameItems.find(element => element.id == el.id);
+                let length = el.children[0].children.length;
+                gameItem.score =gameItem.score.toString();
+                let edited =false;
+                for(let i=0;i<length;i++)
+                {
+                  if(el.children[0].children[i].nodeName==="INPUT")
+                  {
+                    if(!Object.values(gameItem).includes(el.children[0].children[i].value))
+                    {
+                      handleUpdateItem(gameItem.id, 
+                        el.children[0].children[2].value, 
+                        parseInt(el.children[0].children[3].value), 
+                        el.children[0].children[0].value);
+                        return;
+                    }
+                  }
+                }
+              });
+            }}
+          >
+            Save changes
+          </button>
           <button>Revert changes</button>
         </li>
       </Card>

@@ -17,19 +17,19 @@ From a list of games select one and start guessing which of the game item has a 
 - [x] User login
 - [x] Register a new account
 - [x] Logout from account
+- [ ] Safely transfer user data
 - [ ] Ability to modify/delete user account
 - [ ] With user deletion don't delete his games 
 - [ ] Global leaderboards
 - [x] User created games
 - [x] Ability to modify/delete games 
-- [ ] Cascade delete game's game items
+- [ ] Cascade delete game's game items 1
 - [x] Ability to add game items to games
-- [ ] Ability to modify/delete game items
-- [ ] More premade games *
+- [x] Ability to modify/delete game items 
+- [ ] More premade games 1
 - [ ] Ability to browse user created games
-- [ ] Ability to add games to your library
+- [ ] Ability to add/like games from other users so that they appear in your library
 - [ ] When reloading the page keep the user logged
 - [ ] Make it so that after revealing you see both scores
 - [ ] Visual identifiers for errors
 - [ ] Do revert mode for when editing game items
-- [ ] Save changes when the game item gets edited
