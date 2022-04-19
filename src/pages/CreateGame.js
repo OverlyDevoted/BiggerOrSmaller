@@ -10,14 +10,15 @@ function CreateGamePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.name.length === 0) {
+    if (user.token.length === 0) {
       navigate("/account");
     }
   }, []);
 
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
-  if (user.name.length === 0) {
+  const [smallerMode, setSmallerMode] = useState(false);
+  if (user.token.length === 0) {
     return <div>Loading...</div>;
   }
   const handleClick = async () => {
@@ -26,12 +27,15 @@ function CreateGamePage() {
       console.log("The has to be at least 5 characters");
       return;
     }
+    let headers = {headers:{
+      "Authorization":"bearer " + user.token
+    }};
     axios
       .post("https://localhost:7147/api/Game", {
         name: name,
         cover_url: url,
-        userId: user.id,
-      })
+        isSmallerMode: smallerMode
+      },headers)
       .then(function (response) {
         console.log("game added");
         user.games.push(response.data);
@@ -69,6 +73,22 @@ function CreateGamePage() {
                 value={url}
                 onChange={(e) => {
                   setUrl(e.target.value);
+                }}
+              />
+              <br />
+            </label>
+            <label>
+              Smaller mode
+              <br />
+              <input
+                type="checkbox"
+                name="smallerMode"
+                value={smallerMode}
+                onChange={(e) => {
+                  if(smallerMode)
+                  setSmallerMode(false);
+                  else
+                  setSmallerMode(true);
                 }}
               />
               <br />

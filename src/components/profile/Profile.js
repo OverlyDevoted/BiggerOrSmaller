@@ -15,23 +15,27 @@ function Profile() {
   const [toDelete, setToDelete] = useState(null);
   useEffect(() => {
     console.log("update");
-    if (user.name.length < 1) {
+    if (user.token.length < 1) {
       navigate("/account");
       return <div>Loading...</div>;
     }
-    
-    updateGames(user.id);
+
+    updateGames();
   }, []);
   function LogOut() {
-    user.setName("");
-    user.setPassword("");
+    user.setToken("");
     user.setGameItems([]);
     user.setGames([]);
   }
 
-  async function updateGames(userId) {
+  async function updateGames() {
+    let headers = {
+      headers: {
+        Authorization: "bearer " + user.token,
+      },
+    };
     await axios
-      .get("https://localhost:7147/api/Game/" + userId)
+      .get("https://localhost:7147/api/Game/", headers)
       .then(function (response) {
         user.setGames(response.data);
       })
@@ -42,7 +46,12 @@ function Profile() {
   }
 
   const handleDelete = async (gameId, userId) => {
-    await axios.delete("https://localhost:7147/api/Game/" + gameId);
+    let headers = {
+      headers: {
+        Authorization: "bearer " + user.token,
+      },
+    };
+    await axios.delete("https://localhost:7147/api/Game/" + gameId, headers);
 
     updateGames(userId);
   };

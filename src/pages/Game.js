@@ -19,7 +19,7 @@ function GamePage(props) {
   }, []);
   return (
     <div>
-      <MovieList movies={Randomize(user.gameItems)} />
+      <MovieList movies={Randomize(user.gameItems)} mode={user.gameMode} />
     </div>
   );
 }

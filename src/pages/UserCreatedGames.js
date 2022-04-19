@@ -28,14 +28,21 @@ function UserCreatedGamesPage() {
   return (
     <div className={classes.divStyle}>
       {user.userGames.map((games) => {
+        let mode="";
+        if(games.isSmallerMode)
+        mode = "Guess which item has bigger value";
+        else
+        mode = "Guess which item has smaller value";
         return (
           <GameSelectionItem
             key={games.id}
             gameName={games.name}
-            src={games.cover_url}
+            src={games.cover_url}            
             url="game"
+            mode={mode}
             onClick={()=>{
               getGameItems(user,games.id);
+              user.setGameMode(games.isSmallerMode);
             }}
           />
         );

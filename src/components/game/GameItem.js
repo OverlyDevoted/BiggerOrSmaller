@@ -10,14 +10,13 @@ function GameItem(props) {
 
   //console.log("Update " + props.title);
   return (
-    <Card>
+    <Card backgroundColor={props.color}>
       <li
         className={classes.li}
         onClick={() => {
           if (!props.display) {
-            if (!isRevealed && !props.reveal) {
+            if (!props.reveal) {
               props.onClick();
-              setIsRevealed(true);
             }
           }
         }}
@@ -25,7 +24,7 @@ function GameItem(props) {
       />
       <li style={{ fontSize: "20px" }}>{props.item.name}</li>
       <li style={{ fontSize: "20px" }}>
-        {(isRevealed || props.reveal) && <p>{props.item.score}</p>}
+        {(props.reveal) && <p>{props.item.score}</p>}
       </li>
     </Card>
   );

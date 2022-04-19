@@ -6,7 +6,7 @@ import Profile from "../components/profile/Profile";
 
 function AccountPage() {
   const user = useContext(UserContext);
-  if(user.name.length===0)
+  if(user.token.length===0)
   return <div>
     <Form/>
   </div>

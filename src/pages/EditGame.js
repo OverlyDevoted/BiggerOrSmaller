@@ -7,6 +7,7 @@ import GameItem from "../components/game/GameItem";
 import axios from "axios";
 import classes from "../components/ui/Headers.module.css";
 import GameItemEdit from "../components/game/GameItemEdit";
+import { isDOMComponent } from "react-dom/test-utils";
 
 const divStyle = {
   display: "flex",
@@ -14,6 +15,7 @@ const divStyle = {
   justifyContent: "center",
   flexWrap: "wrap",
 };
+
 export async function getGameItems(user, id) {
   await axios
     .get("https://localhost:7147/api/GameItem/" + id)
@@ -27,8 +29,13 @@ export async function getGameItems(user, id) {
 }
 async function handleUpdateItem(user, gameId, id, name, score, url) {
   const payload = { name: name, score: score, cover_Url: url };
+  const headers = {
+    headers: {
+      Authorization: "bearer " + user.token,
+    },
+  };
   await axios
-    .put("https://localhost:7147/api/GameItem/" + id, payload)
+    .put("https://localhost:7147/api/GameItem/" + id, payload, headers)
     .then(function (response) {
       console.log(response);
     })
@@ -39,8 +46,13 @@ async function handleUpdateItem(user, gameId, id, name, score, url) {
   getGameItems(user, gameId);
 }
 async function handleRemove(user, gameId, id) {
+  const headers = {
+    headers: {
+      Authorization: "bearer " + user.token,
+    },
+  };
   await axios
-    .delete("https://localhost:7147/api/GameItem/" + id)
+    .delete("https://localhost:7147/api/GameItem/" + id, headers)
     .then(function (response) {
       console.log("Removed " + response);
     })
@@ -49,10 +61,16 @@ async function handleRemove(user, gameId, id) {
     });
   getGameItems(user, gameId);
 }
-async function handleUpdate(id, name, url) {
-  const gamePayload = { name: name, cover_url: url };
+async function handleUpdate(id, name, url, isSmallerMode, token) {
+  console.log(isSmallerMode);
+  const gamePayload = { name: name, cover_url: url, isSmallerMode: isSmallerMode };
+  const headers = {
+    headers: {
+      Authorization: "bearer " + token,
+    },
+  };
   await axios
-    .put("https://localhost:7147/api/Game/" + id, gamePayload)
+    .put("https://localhost:7147/api/Game/" + id, gamePayload, headers)
     .then(function (response) {
       console.log("insert updated data\n"+JSON.stringify(response.data));
       return true;
@@ -66,14 +84,18 @@ async function handleAdd(user, gameId, name, url, score) {
     console.log("Fill out all the fields");
     return;
   }
-
+  const headers = {
+    headers: {
+      Authorization: "bearer " + user.token,
+    },
+  };
   const gamePayLoad = {
     name: name,
     cover_Url: url,
     score: score,
   };
   await axios
-    .post("https://localhost:7147/api/GameItem/" + gameId, gamePayLoad)
+    .post("https://localhost:7147/api/GameItem/" + gameId, gamePayLoad, headers)
     .then(function (response) {
       console.log("Add " + response);
     })
@@ -91,6 +113,7 @@ function EditGamePage() {
 
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
+  const [isSmallerMode, setIsSmallerMode] = useState(false);
 
   const [gameItemName, setGameItemName] = useState("");
   const [gameItemURL, setGameItemUrl] = useState("");
@@ -102,6 +125,7 @@ function EditGamePage() {
     setName(location.state.name);
     setUrl(location.state.cover_url);
     getGameItems(user, location.state.id);
+    setIsSmallerMode(location.state.isSmallerMode);
   }, []);
 
 
@@ -139,10 +163,27 @@ function EditGamePage() {
                   />
                   <br />
                 </label>
+                <label>
+                  Smaller mode
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="isSmaller"
+                    value={isSmallerMode}
+                    onChange={(e) => {
+                      if(isSmallerMode)
+                      setIsSmallerMode(false)
+                      else
+                      setIsSmallerMode(true)
+                      console.log(isSmallerMode);
+                    }}
+                  />
+                  <br />
+                </label>
               </form>
               <button
                 onClick={() => {
-                  handleUpdate(location.state.id, name, url).then(function() {
+                  handleUpdate(location.state.id, name, url, isSmallerMode, user.token).then(function() {
                     navigate("/account");
                   });
                 }}

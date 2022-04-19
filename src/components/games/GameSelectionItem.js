@@ -10,8 +10,12 @@ function GameSelectionItem(props) {
   function StartGame() {
     if(props.url)
     navigate("/"+props.url);
+
+    console.log(props.onClick)
     if(props.onClick)
     props.onClick();
+
+    
   }
   return (
     <Card className={classes.li}>
@@ -21,6 +25,9 @@ function GameSelectionItem(props) {
       </li>
       <li>
         {props.children}
+      </li>
+      <li>
+        {props.mode}
       </li>
     </Card>
   );

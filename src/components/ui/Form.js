@@ -10,13 +10,10 @@ function Form() {
   const [l_name, setLName] = useState("");
   const [l_password, setLPassword] = useState("");
 
-  
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const navigate = useNavigate();
 
@@ -38,21 +35,32 @@ function Form() {
 
     console.log("send request to create user " + name + " " + password);
     await axios
-      .post("https://localhost:7147/api/User", {
+      .post("https://localhost:7147/api/Auth/register", {
         username: name,
         password: password,
       })
       .then(function (response) {
-        user.setName(name);
-        user.setPassword(password);
-        user.setId(response.data);
         navigate("/");
       })
       .catch(function (exception) {
         console.log(exception);
       });
   };
-
+  const getUserInfo = async (token) => {
+    const headers = {
+      headers: {
+        Authorization: "bearer " + token,
+      },
+    };
+    await axios
+      .get("https://localhost:7147/api/User", headers)
+      .then(function (response) {
+        user.setName(response.data.userName);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   const handleClickLogin = async () => {
     let isError = false;
     if (l_name.length === 0 || l_password.length === 0) {
@@ -63,26 +71,31 @@ function Form() {
 
     console.log("send request to find user " + l_name + " " + l_password);
     await axios
-      .post("https://localhost:7147/api/User/find", {
+      .post("https://localhost:7147/api/Auth/login", {
         userName: l_name,
         password: l_password,
       })
       .then(function (response) {
-        user.setName(l_name);
-        user.setPassword(l_password);
-        user.setId(response.data.id);
-        user.setGames(response.data.games);
-        navigate("/");
+        user.setToken(response.data);
+        console.log(response.data);
+        getUserInfo(response.data);
       })
       .catch(function (exception) {
         console.log(exception);
       });
+    navigate("/");
   };
 
   var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
   return (
-    <div style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Card className={classes.editCard}>
         <li className={classes.li}>
           <h1>Login</h1>
@@ -114,7 +127,14 @@ function Form() {
               <br />
             </label>
           </form>
-          <button onClick={handleClickLogin}>Submit</button>
+          <button
+            onClick={() => {
+              handleClickLogin();
+              
+            }}
+          >
+            Submit
+          </button>
         </li>
       </Card>
       <Card className={classes.editCard}>
