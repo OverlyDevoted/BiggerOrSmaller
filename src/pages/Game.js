@@ -1,14 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import {UserContext} from '../App.js'
 import MovieList from "../components/game/MovieList";
-
+function Randomize(array) {
+  let temp = [];
+  let length = array.length,
+    randomIndex;
+  while (length != 0) {
+    randomIndex = Math.floor(Math.random() * length);
+    temp.push(array[randomIndex]);
+    array.splice(randomIndex, 1);
+    length--;
+  }
+  return temp;
+}
 function GamePage(props) {
-  const [gameName, setGameName] = useState("imdbTop250");
+  const user = useContext(UserContext);
   useEffect(() => {
-    setGameName(props.gameName);
   }, []);
   return (
     <div>
-      {gameName === "imdbTop250" && <MovieList movies={props.movies} />}
+      <MovieList movies={Randomize(user.gameItems)} />
     </div>
   );
 }

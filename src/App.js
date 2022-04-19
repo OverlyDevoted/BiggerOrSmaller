@@ -32,12 +32,13 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [loadedGames, setLoadedGames] = useState([]);
-  
+
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [id, setId] = useState(null);
   const [games, setGames] = useState([]);
   const [gameItems, setGameItems] = useState([]);
+  const [userGames, setUserGames] = useState([]);
   useEffect(() => {
     //when a backend gets implemented get getters for api keys or smth cuz lmao
     //no, make it so that the back end sends the requeest and front end makes request to back
@@ -49,12 +50,11 @@ function App() {
         setLoadedMovies(res.data.items);
         console.log(res);
       });
-    
+
     axios.get("https://localhost:7147/api/User").then((res) => {
       setLoadedGames(res.data);
     });
     console.log(name + " " + password);
-
   }, []);
 
   if (isLoading) {
@@ -66,14 +66,32 @@ function App() {
   return (
     <div className={classes.div}>
       <Layout creatorText="Website created by Robert Dulko">
-        <UserContext.Provider value={{name, password, id, games, gameItems, setName, setPassword, setId, setGames, setGameItems}}>
+        <UserContext.Provider
+          value={{
+            name,
+            password,
+            id,
+            games,
+            gameItems,
+            userGames,
+            setName,
+            setPassword,
+            setId,
+            setGames,
+            setGameItems,
+            setUserGames,
+          }}
+        >
           <Routes>
             <Route path="/" element={<AllGamesPage />} />
             <Route path="leaderboard" element={<LeaderboardPage />} />
             <Route path="create-game" element={<CreateGamePage />} />
             <Route path="account" element={<AccountPage />} />
             <Route path="edit-game" element={<EditGamePage />} />
-            <Route path="user-created-games" element={<UserCreatedGamesPage/>}/>
+            <Route
+              path="user-created-games"
+              element={<UserCreatedGamesPage />}
+            />
             <Route
               path="game"
               element={<GamePage gameName="imdbTop250" movies={temp_arr} />}

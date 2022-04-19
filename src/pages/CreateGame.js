@@ -35,7 +35,7 @@ function CreateGamePage() {
       .then(function (response) {
         console.log("game added");
         user.games.push(response.data);
-        navigate("/user-created-games");
+        navigate("/account");
       })
       .catch(function (exception) {
         console.log(exception);

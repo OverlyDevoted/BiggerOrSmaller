@@ -10,7 +10,8 @@ function GameItemEdit(props) {
   //#4B0000
   const [backgroundColor, setBackgroundColor] = useState("");
   useEffect(() => {
-    console.log(props.title);
+
+
     if (image != props.image || title != props.title || score != props.score) {
       setBackgroundColor("#4B0000");
     }

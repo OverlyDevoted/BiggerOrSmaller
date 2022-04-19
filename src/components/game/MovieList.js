@@ -8,18 +8,23 @@ function MovieList(props) {
   const [secondIndex, setSecondIndex] = useState(1);
   const [score, setScore] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [reveal, setReveal] = useState(false);
   const length = props.movies.length;
   useEffect(() => {
-    console.log(props.movies.length);
     if (props.movies.length > 0) 
       setIsLoaded(true);
   }, [props]);
-  function setNew(id) {
+
+  function setNew() {
+    
     if (firstIndex >= length - 3 || secondIndex >= length - 3) {
+      setReveal(true);
       console.log("end game");
       return;
     }
+    setReveal(true);
     setTimeout(() => {
+      setReveal(false);
       setFirstIndex(firstIndex + 2);
       setSecondIndex(secondIndex + 2);
     }, 2000);
@@ -29,8 +34,8 @@ function MovieList(props) {
     let result;
 
     if (
-      props.movies[firstIndex].imDbRating >=
-      props.movies[secondIndex].imDbRating
+      props.movies[firstIndex].score >=
+      props.movies[secondIndex].score
     )
       result = 0;
     else result = 1;
@@ -50,14 +55,12 @@ function MovieList(props) {
         <div className={classes.div}>
           <GameItem
             key={0}
-            id={props.movies[firstIndex].id}
-            title={props.movies[firstIndex].title}
-            image={props.movies[firstIndex].image}
-            score={props.movies[firstIndex].rank}
+            item={props.movies[firstIndex]}
             onClick={() => {
-              setNew(1);
+              setNew();
+              checkBigger(0);
             }}
-            checkBigger={() => checkBigger(0)}
+            reveal={reveal}
           />
           <ul className={classes.ul}>
             <li>
@@ -70,14 +73,12 @@ function MovieList(props) {
           </ul>
           <GameItem
             key={1}
-            id={props.movies[secondIndex].id}
-            title={props.movies[secondIndex].title}
-            image={props.movies[secondIndex].image}
-            score={props.movies[secondIndex].rank}
+            item={props.movies[secondIndex]}
             onClick={() => {
-              setNew(0);
+              setNew();
+              checkBigger(1);
             }}
-            checkBigger={() => checkBigger(1)}
+            reveal={reveal}
           />
         </div>
       )}

@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../App";
+//could rename to RegisterForm
 function Form() {
   const user = useContext(UserContext);
   const [l_name, setLName] = useState("");
@@ -15,7 +16,6 @@ function Form() {
 
 
   useEffect(() => {
-    console.log(user.name + " " + user.password);
   }, []);
 
   const navigate = useNavigate();

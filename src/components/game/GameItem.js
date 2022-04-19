@@ -4,7 +4,9 @@ import classesSelection from "../games/GameSelectionItem.module.css";
 import { useEffect, useState } from "react";
 function GameItem(props) {
   const [isRevealed, setIsRevealed] = useState(false);
-  useEffect(() => {}, [props.id]);
+  useEffect(() => {
+    setIsRevealed(false);
+  }, [props.item.id]);
 
   //console.log("Update " + props.title);
   return (
@@ -13,16 +15,17 @@ function GameItem(props) {
         className={classes.li}
         onClick={() => {
           if (!props.display) {
-            props.checkBigger();
-            props.onClick();
-            setIsRevealed(true);
+            if (!isRevealed && !props.reveal) {
+              props.onClick();
+              setIsRevealed(true);
+            }
           }
         }}
-        style={{ backgroundImage: "url(" + props.image + ")" }}
+        style={{ backgroundImage: "url(" + props.item.cover_Url + ")" }}
       />
-      <li style={{ fontSize: "20px" }}>{props.title}</li>
+      <li style={{ fontSize: "20px" }}>{props.item.name}</li>
       <li style={{ fontSize: "20px" }}>
-        {(isRevealed || props.reveal) && <p>{props.score}</p>}
+        {(isRevealed || props.reveal) && <p>{props.item.score}</p>}
       </li>
     </Card>
   );

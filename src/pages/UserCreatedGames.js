@@ -1,91 +1,45 @@
 import axios from "axios";
+import GameSelectionItem from "../components/games/GameSelectionItem";
+import ConfirmationBox from "../components/ui/ConfirmationBox";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
-import GameSelectionItem from "../components/games/GameSelectionItem";
-import ConfirmationBox from "../components/ui/ConfirmationBox";
-import classes from "../pages/AllGames.module.css";
+import classes from "../components/ui/FlexDisplay.module.css";
+import {getGameItems} from './EditGame'
+
 function UserCreatedGamesPage() {
   const user = useContext(UserContext);
-  const navigate = useNavigate();
 
-  const [conBox, setConBox] = useState(false);
-  const [toDelete, setToDelete] = useState(null);
-  async function updateGames(userId) {
-    await axios
-      .get("https://localhost:7147/api/Game/" + userId)
-      .then(function (response) {
-        user.setGames(response.data);
-      })
-      .catch(function (exception) {
-        console.log(exception);
-        user.setGames([]);
-      });
-  }
   useEffect(() => {
-    
-    console.log("update");
-    if (user.name.length < 1) {
-      navigate("/account");
-      return <div>Loading...</div>;
-    }
-    if (user.games.length < 1) {
-      navigate("/create-game");
-      return <div>Loading...</div>;
-    }
-    updateGames(user.id);
+    getMostRecentGames();
   }, []);
 
-  const handleDelete = async (gameId, userId) => {
-    await axios.delete("https://localhost:7147/api/Game/" + gameId);
-
-    updateGames(userId);
-  };
-  function handleEdit(game) {
-    console.log(game);
-    navigate("/edit-game", { state: game });
+  async function getMostRecentGames() {
+    await axios
+      .get("https://localhost:7147/api/Game/all/100")
+      .then(function (response) {
+        //console.log(response.data);
+        user.setUserGames(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
   return (
-    <div className={classes.div}>
-      {user.games.map((games) => {
+    <div className={classes.divStyle}>
+      {user.userGames.map((games) => {
         return (
           <GameSelectionItem
             key={games.id}
             gameName={games.name}
             src={games.cover_url}
-            url="account"
-          >
-            <button
-              onClick={() => {
-                handleEdit(games);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => {
-                setConBox(true);
-                setToDelete(games.id);
-              }}
-            >
-              Delete
-            </button>
-          </GameSelectionItem>
+            url="game"
+            onClick={()=>{
+              getGameItems(user,games.id);
+            }}
+          />
         );
       })}
-      {conBox && (
-        <ConfirmationBox
-          onSubmit={() => {
-            handleDelete(toDelete, user.id);
-            setConBox(false);
-            setToDelete(null);
-          }}
-          onCancel={() => {
-            setConBox(false);
-            setToDelete(null);
-          }}
-        />
-      )}
     </div>
   );
 }
